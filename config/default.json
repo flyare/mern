@@ -1,0 +1,6 @@
+{
+  "mongoURL": "mongodb+srv://ducphan:tT123456@dbmern.0gojb.mongodb.net/mern?retryWrites=true&w=majority",
+  "jwtSecret": "phanhoangduc",
+  "githubClientId": "1e75629ee1f1b1a51d8d",
+  "githubSecret": "94d0138a09aa67176e709d696f2a4792069a4f3d"
+}
