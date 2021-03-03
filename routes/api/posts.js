@@ -13,7 +13,11 @@ const route = express.Router();
 // @access  Private
 route.post(
     "/",
-    [auth, check("text", "Text is required.").not().isEmpty()],
+    [
+        auth,
+        check("text", "Text is required.").not().isEmpty(),
+        check("title", "Title is required.").not().isEmpty(),
+    ],
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -24,6 +28,7 @@ route.post(
             const user = await User.findById(req.user.id).select("-password");
             const newPost = new Post({
                 text: req.body.text,
+                title: req.body.title,
                 name: user.name,
                 avatar: user.avatar,
                 user: req.user.id,
@@ -135,7 +140,6 @@ route.put("/like/:id", auth, async (req, res) => {
 // @dest    Unlike a post
 // @access  Private
 route.put("/unlike/:id", auth, async (req, res) => {
-    console.log(1);
     try {
         const post = await Post.findById(req.params.id);
 
@@ -150,7 +154,9 @@ route.put("/unlike/:id", auth, async (req, res) => {
             return res.status(400).json({ msg: "Post not yet been liked." });
         }
 
-        const removeIndex = post.likes.map(like => like.user.toString()).indexOf(req.user.id);
+        const removeIndex = post.likes
+            .map((like) => like.user.toString())
+            .indexOf(req.user.id);
 
         post.likes.splice(removeIndex, 1);
 
@@ -160,10 +166,44 @@ route.put("/unlike/:id", auth, async (req, res) => {
     } catch (error) {
         console.error(error.message);
         if (error.kind === "ObjectId") {
-            return res.status(404).json({ msg: 'Post not found.' });
+            return res.status(404).json({ msg: "Post not found." });
         }
         return res.status(500).json({ msg: "Server Error." });
     }
 });
+
+// @route   Post  api/posts/comment/id
+// @dest    Add comment to a Post
+// @access  Private
+route.post(
+    "/comment/:id",
+    [auth, check("text", "Text is required.").not().isEmpty()],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        try {
+            const user = await User.findById(req.user.id).select("-password");
+            const post = await Post.findById(req.params.id);
+            const postComment = {
+                text: req.body.text,
+                name: user.name,
+                avatar: user.avatar,
+                user: req.user.id,
+            };
+
+            post.comments.unshift(postComment);
+
+            await post.save();
+
+            res.json({ post });
+        } catch (error) {
+            console.error(error.message);
+            return res.status(500).json({ msg: "Server Error." });
+        }
+    }
+);
 
 module.exports = route;
