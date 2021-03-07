@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from "react";
+import { connect } from "react-redux";
 import validate from "validator";
+import { setAlert } from "../../actions/alert";
+import PropTypes from 'prop-types';
 
-const Register = () => {
+const Register = ({setAlert}) => {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -18,11 +21,11 @@ const Register = () => {
         e.preventDefault();
 
         if (validate.isEmpty(name)) {
-            console.log("Name is required");
+            setAlert("Name is required", "danger");
         } else if (!validate.isEmail(email)) {
-            console.log("Email is required");
+            setAlert("Email is required", "danger");
         } else if (password !== password2) {
-            console.log("Password not match");
+            setAlert("Password do not match", "danger");
         } else {
             console.log(formData);
         }
@@ -50,7 +53,7 @@ const Register = () => {
                 </div>
                 <div className="form-group">
                     <input
-                        type="email"
+                        type="text"
                         placeholder="Email Address"
                         name="email"
                         value={email}
@@ -94,4 +97,8 @@ const Register = () => {
     );
 };
 
-export default Register;
+Register.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+}
+
+export default connect(null, {setAlert})(Register);
