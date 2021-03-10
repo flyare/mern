@@ -6,7 +6,7 @@ import { login } from "../../actions/auth";
 import validate from "validator";
 import { setAlert } from "../../actions/alert";
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ setAlert, login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,11 +21,11 @@ const Login = ({ login, isAuthenticated }) => {
     e.preventDefault();
     if (!validate.isEmail(email)) {
       setAlert("Email is required", "danger");
-    }
-    if (!validate.isEmpty(password)) {
+    } else if (validate.isEmpty(password)) {
       setAlert("Password is required", "danger");
+    } else {
+      login(email, password);
     }
-    login(email, password);
   };
 
   if (isAuthenticated) {
@@ -72,6 +72,7 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
@@ -79,4 +80,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { setAlert, login })(Login);
