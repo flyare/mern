@@ -66,8 +66,7 @@ route.post(
           res.json({ token });
         }
       );
-    } catch (error) {
-      console.log(error.message)
+    } catch (error) {      
       res.status(500).send("Server Error");
     }
   }
