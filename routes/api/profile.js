@@ -26,7 +26,7 @@ route.get("/me", auth, async (req, res) => {
                 .json({ msg: "There is no profile for this user." });
         }
 
-        res.send("API Profile");
+        res.json(profile);
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({ msg: "Server Error." });
