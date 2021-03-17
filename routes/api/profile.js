@@ -19,8 +19,9 @@ route.get("/me", auth, async (req, res) => {
             user: req.user.id,
         }).populate("user", ["name", "avatar"]);
 
-        if (!profile) {            
+        if (!profile) {
             return res
+                .status(404)
                 .json({ msg: "There is no profile for this user." });
         }
 

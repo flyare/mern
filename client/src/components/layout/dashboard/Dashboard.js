@@ -23,10 +23,18 @@ const Dashboard = ({
                 <i className="fas fa-user-alt"></i> Wellcome{" "}
                 {user ? user.user.name : ""}{" "}
             </p>
-            {profile ? <Fragment>Has</Fragment> : <Fragment>
-                <p>You have not yet setup a profile, please add some info</p>
-                <Link to="/create-profile" className="btn btn-primary my-1">Create Profile</Link>
-            </Fragment>}
+            {profile ? (
+                <Fragment>Has</Fragment>
+            ) : (
+                <Fragment>
+                    <p>
+                        You have not yet setup a profile, please add some info
+                    </p>
+                    <Link to="/create-profile" className="btn btn-primary my-1">
+                        Create Profile
+                    </Link>
+                </Fragment>
+            )}
         </Fragment>
     );
 };
