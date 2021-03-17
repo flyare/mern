@@ -68,8 +68,7 @@ route.get("/:id", auth, async (req, res) => {
         }
 
         res.status(200).json({ post });
-    } catch (error) {
-        console.error(error.message);
+    } catch (error) {        
         if (error.kind === "ObjectId") {
             return res.status(404).json({ msg: "Post not found." });
         }
@@ -95,8 +94,7 @@ route.delete("/:id", auth, async (req, res) => {
 
         await post.remove();
         res.json({ msg: "Post removed!" });
-    } catch (error) {
-        console.error(error.message);
+    } catch (error) {        
         if (error.kind === "ObjectId") {
             return res.status(404).json({ msg: "Post not found." });
         }

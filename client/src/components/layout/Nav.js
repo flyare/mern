@@ -8,11 +8,11 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
     const authLinks = (
         <ul>
             <li>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/dashboard"><i className="fas fa-user-shield"></i> Dashboard</Link>
             </li>
             <li>
                 <a href="#!" onClick={logout}>
-                    Logout
+                    <i className="fas fa-sign-out-alt"></i> Logout
                 </a>
             </li>
         </ul>
@@ -24,10 +24,10 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
                 <Link to="!#">Developers</Link>
             </li>
             <li>
-                <Link to="/register">Register</Link>
+                <Link to="/register"><i className="fas fa-user-plus"></i> Register</Link>
             </li>
             <li>
-                <Link to="/login">Login</Link>
+                <Link to="/login"><i className="fas fa-sign-in-alt"></i> Login</Link>
             </li>
         </ul>
     );
