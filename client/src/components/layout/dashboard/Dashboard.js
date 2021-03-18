@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Spinner from "../Spinner";
 import { getCurrentProfile } from "../../../actions/profile";
 import { Link } from "react-router-dom";
+import DashboardAction from "./DashboardAction";
 
 const Dashboard = ({
     getCurrentProfile,
@@ -24,7 +25,9 @@ const Dashboard = ({
                 {user ? user.user.name : ""}{" "}
             </p>
             {profile ? (
-                <Fragment>Has</Fragment>
+                <Fragment>
+                    <DashboardAction />
+                </Fragment>
             ) : (
                 <Fragment>
                     <p>
