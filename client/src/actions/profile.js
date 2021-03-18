@@ -40,7 +40,7 @@ export const createProfile = (formData, history, edit = false) => async (
             payload: res.data,
         });
 
-        dispatch(setAlert(!edit ? "Create Profile" : "Update Profile"));
+        dispatch(setAlert(!edit ? "Created Profile" : "Update Profile", "success"));
 
         if (!edit) {
             history.push("/dashboard");
