@@ -48,7 +48,7 @@ const EditProfile = ({
 
     const onSubmit = (e) => {
         e.preventDefault();
-        createProfile(formData, history);
+        createProfile(formData, history, true);
     };
 
     useEffect(() => {
@@ -65,11 +65,11 @@ const EditProfile = ({
                     ? ""
                     : profile.githubusername,
             bio: loading || !profile.bio ? "" : profile.bio,
-            twitter: loading || !profile.twitter ? "" : profile.twitter,
-            facebook: loading || !profile.facebook ? "" : profile.facebook,
-            youtube: loading || !profile.youtube ? "" : profile.youtube,
-            linkedin: loading || !profile.linkedin ? "" : profile.linkedin,
-            instagram: loading || !profile.instagram ? "" : profile.instagram,
+            twitter: loading || !profile.social.twitter ? "" : profile.social.twitter,
+            facebook: loading || !profile.social.facebook ? "" : profile.social.facebook,
+            youtube: loading || !profile.social.youtube ? "" : profile.social.youtube,
+            linkedin: loading || !profile.social.linkedin ? "" : profile.social.linkedin,
+            instagram: loading || !profile.social.instagram ? "" : profile.social.instagram,
         });
     }, [loading]);
 
@@ -242,9 +242,9 @@ const EditProfile = ({
                     </Fragment>
                 )}
                 <input type="submit" className="btn btn-primary my-1" />
-                <a className="btn btn-light my-1" href="dashboard.html">
+                <Link className="btn btn-light my-1" to="/dashboard">
                     Go Back
-                </a>
+                </Link>
             </form>
         </Fragment>
     );
